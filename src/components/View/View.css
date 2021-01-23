@@ -1,0 +1,88 @@
+.view_main
+{
+    background:url('../../resources/view.png');
+    background-size: 100% 110%;
+}
+
+.navbar_ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+  }
+  
+  .navbar_li {
+    float: left;
+  }
+  
+  .navbar_li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    cursor:grab;
+  }
+
+  .navbar_i a:hover {
+    background-color:whitesmoke;
+    cursor:grab;
+  }
+  .navbar_active {
+    background-color: #4CAF50;
+  }
+
+  .form_file {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  .form_button {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .form input[type=button]:hover {
+    background-color: #45a049;
+  }
+  
+  .divname {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+  }
+
+  .image-card{
+    display:flex;
+    justify-content:space-evenly;
+    flex-wrap:wrap;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

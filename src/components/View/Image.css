@@ -1,0 +1,12 @@
+ .Image{
+    background-color:white;
+     width:200px;
+     padding:10px;
+     margin:1rem;
+     box-shadow: 5px 10px 15px -5px rgba(0,0,0,0.56);
+     border-radius:15px;
+ }
+ .photo {
+    height: 200px;
+    width: 200px;
+  }
