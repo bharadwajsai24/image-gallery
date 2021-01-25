@@ -20,7 +20,7 @@ const Login = () =>{
         form_data.append("password", login.password);
     
         const response = await axios({
-          url: "http://localhost/sureify/gallery/php/login.php",
+          url: "http://localhost/Sureify_tasks/gallery/php/login.php",
           method: "post",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -34,14 +34,15 @@ const Login = () =>{
     
           const getimageurls = await axios({
             url:
-              "http://localhost/sureify/gallery/php/getimages.php",
+              "http://localhost/Sureify_tasks/gallery/php/getimages.php",
             method: "post",
             headers: {
               "Content-Type": "application/x-www-form-urlencoded",
             },
             data: form_data,
           });
-        
+          localStorage.setItem('email',login.email);
+          localStorage.setItem('urls',getimageurls.data.urls)
           history.push({
               pathname:'/view',
               state:{

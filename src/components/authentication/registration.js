@@ -32,7 +32,7 @@ const register = () =>{
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       }
-    axios.post('http://localhost/sureify/gallery/php/register.php',form_data,headers)
+    axios.post('http://localhost/Sureify_tasks/gallery/php/register.php',form_data,headers)
     .then(response =>{
         let res=response.data;
         console.log(res);
