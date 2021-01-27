@@ -17,7 +17,12 @@ const register = () =>{
     let name=userregister.name;
     let email=userregister.email;
     let password=userregister.password;
-    if(name == null || email == null || password == null)
+    let repass=userregister.rpassword;
+    if(password!==repass)
+    {
+        alert("Both the passwords should be same");
+    }
+    else if(name == null || email == null || password == null)
     {
         alert("Please Fill all the details");
     }
@@ -43,7 +48,7 @@ const register = () =>{
         }
         else
         {
-            alert("Registration unsuccessful");   
+            alert(response.data.message);   
         }
     });
     
@@ -54,11 +59,12 @@ const login = ()=>{
 }
 
  return (
+     <div className="register_div">
     <div className="register">
     <div className="register-header">
-        <h4 style={{color:'black'}}>Gallery register</h4>
     </div>
     <div className="register-form">
+    <i><h2  >Gallery Register</h2></i>
          <h3>Name:</h3>
         <input type="text" placeholder="name" name="name" required={true}  onChange={onChangeHandler}/><br/>
         <h3>Email:</h3>
@@ -66,17 +72,20 @@ const login = ()=>{
         <h3>Password:</h3>
         <input type="password" placeholder="Password" name="password" required={true} onChange={onChangeHandler} />
         <br/>
+        <h3>Re Enter Password:</h3>
+        <input type="password" placeholder="ReEnter Password" name="rpassword" required={true} onChange={onChangeHandler} />
+        <br/>
         
         
         <input type="button" value="register"  className="register-form-button" onClick={register}/>
       
-        <br/>
+       
         <input type="button" value="Login" className="register-form-button" onClick={login}/>
             <br/>
         
     </div>
     </div>
-
+</div>
     );
 }
 export default Register;

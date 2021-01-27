@@ -18,7 +18,13 @@ const View = () => {
     const location = useLocation();
 
     const [uploadImage,imagehandler]=useState(null);
+    const data=localStorage.getItem('urls');
     const [imageUrl,urlhandler]=useState(location.state.imageurl);
+    const bharadwaj={
+      urls:data,
+    }
+   // urlhandler(bharadwaj.urls);
+    console.log(data);
     console.log("Bharadwajsai  "+imageUrl);
     
     const onChangeHandler = (e) =>
@@ -78,8 +84,7 @@ const View = () => {
 
 
     const logout = ()=>
-    {
-       
+    {     
         history.push("/login");
     }
     if (!(localStorage.getItem('email'))) {
@@ -87,8 +92,56 @@ const View = () => {
       }
 
 
+const deletebutton = async (e)=> {
+
+  console.log(e.target.id);
+  let form_data=new FormData();
+  form_data.append('sno',e.target.id);
+  const response = await axios({
+    url: "http://localhost/Sureify_tasks/gallery/php/delete.php",
+    method: "post",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    data: form_data,
+  });
+
+  if (response.data.status === "true") {
+    alert("Image Deletion Successful");
+    form_data = new FormData();
+    form_data.append("email", location.state.email);
+
+    const getimageurls = await axios({
+      url:
+        "http://localhost/Sureify_tasks/gallery/php/getimages.php",
+      method: "post",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      data: form_data,
+     
+    });
+    urlhandler(getimageurls.data.urls);
+  }
+  else
+  {
+      alert("Image Upload Failed");
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+      
 return (
-        <div >
+        <div className="view_main" >
             <div >
             <ul className="navbar_ul">
             <li className="navbar_li"><a className="navbar_active" ><i src={"/icon-1.jpeg"}/>Image-Gallery</a></li>
@@ -104,7 +157,10 @@ return (
             <div className="image-card">
             {imageUrl.length > 0 ?
                imageUrl.map((url,index)=>(
-                <Image path={url.imagedata} ext={url.extention}/>
+                <div className="Image">
+    <img src={`data:image/${url.extention};base64,${url.imagedata}`} className="photo" alt="image" />
+    <button className="image_deletebutton" id={url.sno} onClick={deletebutton}>Delete</button>
+</div>
             )):<p>Images are yet to upload</p>
             };
                     

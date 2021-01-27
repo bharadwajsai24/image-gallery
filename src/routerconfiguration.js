@@ -10,20 +10,26 @@ import Register from "./components/authentication/registration";
 import Error from "./components/authentication/Error";
 import View from "./components/View/View";
 function RouterConfiguration() {
+
+    console.log(localStorage.getItem('email'));
     return(
     <BrowserRouter>
     <Switch>
+    <Route exact path="/view">
+        {
+         localStorage.getItem('email')!=null ?<View/>:<Redirect to="/login" />
+        }
+        </Route>
         <Route exact path="/" >
             <Redirect to="/login"></Redirect>
         </Route>
         <Route exact path="/login" >
-        {localStorage.getItem('email') ? <Redirect to="/view" /> : <Login />}
+        {
+         <Login />
+        }
         </Route>
         <Route exact path="/register" >
             <Register/>
-        </Route>
-        <Route exact path="/view">
-        {<View/>}
         </Route>
         <Route exact path="*">
             <Error/>

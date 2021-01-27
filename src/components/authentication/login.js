@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import './login.css';
-import {useHistory} from 'react-router-dom';
+import {Redirect, useHistory} from 'react-router-dom';
 import axios from 'axios';
 const Login = () =>{
 
@@ -18,7 +18,12 @@ const Login = () =>{
         var form_data = new FormData();
         form_data.append("email", login.email);
         form_data.append("password", login.password);
-    
+        if(login.email==null || login.password==null)
+        {
+            alert("Enter all the details");
+        }
+        else
+        {
         const response = await axios({
           url: "http://localhost/Sureify_tasks/gallery/php/login.php",
           method: "post",
@@ -42,93 +47,37 @@ const Login = () =>{
             data: form_data,
           });
           localStorage.setItem('email',login.email);
-          localStorage.setItem('urls',getimageurls.data.urls)
           history.push({
-              pathname:'/view',
-              state:{
-                  email:login.email,
-                  password:login.password,
-                  imageurl:getimageurls.data.urls,
-              },
-            }
-          );
+            pathname: "/view",
+            state: {
+              email: login.email,
+              password: login.password,
+              imageurl: getimageurls.data.urls,
+            },
+          });
+
+          
         }
         else
         {
-          alert("Please Enter Correct Details");
+          alert(response.data.message);
         }
     }
-
-    // const signin = async () =>{
-    //     let email = login.email;
-    //     let pw = login.password;
-    //     var form_data= new FormData();
-    //     form_data.append("email", email);
-    //     form_data.append("password", pw);
-    //     console.log(email+"  "+pw);
-    //     const headers = {
-    //         headers: {
-    //           'Content-Type': 'application/x-www-form-urlencoded'
-    //         }
-    //       };
-    //       const response = await axios({
-    //         url:
-    //         "http://localhost/sureify/gallery/php/login.php",
-    //         method: "post",
-    //         headers: headers,
-    //         data: form_data,
-    //       });
-       
-    //         if(response.data.status =="true")
-    //         {
-                
-    //             var form_data=new FormData();
-    //             form_data.append('email',login.email);
-    //             const headers = {
-    //                 headers: {
-    //                   'Content-Type': 'application/x-www-form-urlencoded'
-    //                 }
-    //               };
-    //               const getimages = await axios({
-    //                 url:
-    //                   "http://localhost/sureify/gallery/php/getimages.php",
-    //                 method: "post",
-    //                 headers: headers,
-    //                 data: form_data,
-    //               });
-    //               urlhandler(getimages.data);
-               
-    //             history.push({
-    //                pathname:"/view",
-    //                 state:{
-    //                     email:email,
-    //                     password:pw,
-    //                     imageurl:imageurls,
-    //                 },
-                
-    //             });
-    //         }
-    //         else
-    //         {
-    //             alert("Please Enter Valid Details");
-    //         }
-    //     }
-
+  }
     
-   
-
-
-
-
-    const register = () => {
+  const register = () => {
            history.push("/register");
     }
  return (
+   <div className="login_div">
         <div className="login">
         <div className="login-header">
-            <h3 style={{color:'black'}} >Gallery Login</h3>
+            
         </div>
         <div className="login-form">
+        
+        <i><h2  >Gallery Login</h2></i>
+
             <h3>Email:</h3>
             <input type="email" placeholder="email" name="email" onChange={onChangeHandler}/><br/>
             <h3>Password:</h3>
@@ -140,7 +89,7 @@ const Login = () =>{
             <br/>
         </div>
         </div>
-
+        </div>
     );
 }
 

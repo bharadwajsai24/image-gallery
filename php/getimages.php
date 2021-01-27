@@ -13,10 +13,12 @@ if($_SERVER['REQUEST_METHOD']=="POST")
             $splitfilepath=explode(".",$filepath);
             $length=count($splitfilepath);
             $extention=$splitfilepath[$length-1];
+            $sno=$row[0];
             $imageData = base64_encode(file_get_contents($filepath));
             $temp=array(
                 "imagedata"=>$imageData,
-                "extention"=>$extention
+                "extention"=>$extention,
+                "sno"=>$sno
             );
             array_push($result,$temp);
         }

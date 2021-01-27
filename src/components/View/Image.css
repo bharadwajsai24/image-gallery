@@ -10,3 +10,12 @@
     height: 200px;
     width: 200px;
   }
+.image_deletebutton{
+   background-color:red;
+   color:white;
+   padding: 10px 20px;
+   border-radius: 8px;
+   text-decoration: none;
+   margin: 4px 2px;
+  cursor: pointer;
+}
