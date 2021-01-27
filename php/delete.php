@@ -10,6 +10,8 @@ if($_SERVER['REQUEST_METHOD']=="POST")
         {
             $result["status"]="true";
             $result["message"]="Image Deletion successful";
+            $url="../uploads/file".$_POST["sno"].".".$_POST['ext'];
+            unlink($url); //it is used to delete a file
         }
         else
         {
@@ -17,7 +19,7 @@ if($_SERVER['REQUEST_METHOD']=="POST")
             $result["message"]="Image Deletion Failed";
         }
        
-    echo   json_encode($result);
+    echo  json_encode($result);
 }
 
 ?>

@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 
 	"net/http"
 	"os"
@@ -58,7 +59,7 @@ func uploadImage(w http.ResponseWriter, r *http.Request) {
 
 			email := r.Form.Get("email")
 			var maxsno = 0
-			er := db.QueryRow("SELECT max(sno) FROM imagedetails").Scan(&maxsno)
+			er := db.QueryRow("SELECT LAST_INSERT_ID() imagedetails").Scan(&maxsno)
 			if er != nil {
 				maxsno = 0
 			}
@@ -175,6 +176,50 @@ func signup(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func delete(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+	if r.Method == "POST" {
+		fmt.Println("A request is made for delete")
+		r.ParseForm()
+		result := make(map[string]string)
+		statement, er := db.Query("SELECT * FROM imagedetails WHERE sno=?", r.FormValue("sno"))
+		var count = 0
+		for statement.Next() {
+			count++
+		}
+		if er != nil || count == 0 {
+			result["status"] = "false"
+			result["message"] = "Deletion  Failed"
+			json.NewEncoder(w).Encode(result)
+			return
+
+		}
+		statemen, er := db.Prepare("DELETE FROM imagedetails WHERE sno=?")
+		if er != nil {
+			result["status"] = "false"
+			result["message"] = "Deletion Failed"
+			json.NewEncoder(w).Encode(result)
+			return
+		}
+		_, err = statemen.Exec(r.FormValue("sno"))
+		if err != nil {
+			result["status"] = "false"
+			result["message"] = "Deletion Failed"
+			json.NewEncoder(w).Encode(result)
+			return
+		}
+		result["status"] = "true"
+		result["message"] = "Image is successfully deleted"
+		json.NewEncoder(w).Encode(result)
+		e := os.Remove("../uploads/file" + r.FormValue("sno") + "." + r.FormValue("ext"))
+		if e != nil {
+			log.Fatal(e)
+		}
+	}
+
+}
+
 func login(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
@@ -211,7 +256,7 @@ func main() {
 	http.HandleFunc("/getImages", getImages)
 	http.HandleFunc("/register", signup)
 	http.HandleFunc("/login", login)
-
+	http.HandleFunc("/delete", delete)
 	http.ListenAndServe(":8000", nil) //this is used to start the server at port 8000
 	defer db.Close()
 }

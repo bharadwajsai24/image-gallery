@@ -6,7 +6,7 @@ if($_SERVER['REQUEST_METHOD']=="POST")
     $tempname=$_FILES['image']['tmp_name'];
     $email=$_POST['email'];
     $location="../uploads/file";
-    $sql="SELECT MAX(sno) FROM imagedetails";
+    $sql="SELECT LAST_INSERT_ID() FROM imagedetails";
     $res=mysqli_query($conn,$sql);
     $row=mysqli_fetch_array($res);
     $maxno=$row[0];

@@ -5,14 +5,17 @@ import { useHistory } from 'react-router-dom';
 
 const Register = () =>{
 
+//constants and states
 const [userregister,registerhandler] = useState({});
 const history = useHistory();
 
+//capturing userdetails
 const onChangeHandler = (e)=>{
     registerhandler({ ...userregister,[e.target.name]:e.target.value});
     console.log(userregister);
 }
 
+//handling regestrations
 const register = () =>{
     let name=userregister.name;
     let email=userregister.email;
@@ -54,6 +57,7 @@ const register = () =>{
     
 }
 }
+
 const login = ()=>{
     history.push("/login");
 }

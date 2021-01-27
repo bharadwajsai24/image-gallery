@@ -1,18 +1,18 @@
 import React,{useState} from 'react';
 import './login.css';
-import {Redirect, useHistory} from 'react-router-dom';
+import { useHistory} from 'react-router-dom';
 import axios from 'axios';
 const Login = () =>{
 
+    // states and constants
     const [login,loginhandler]=useState({  });
-    //const [imageurls,urlhandler]=useState();
     const history=useHistory();
     //invoked when values are entered in input fields
     const onChangeHandler = (e) =>{
             loginhandler({ ...login,[e.target.name]:e.target.value});
             console.log(login);
         };
-    //invoked when the form is dubmitted
+    //invoked when the form is submitted
 
     const signin = async () => {
         var form_data = new FormData();
@@ -65,9 +65,13 @@ const Login = () =>{
     }
   }
     
+  //redirects the user to the registration page
   const register = () => {
            history.push("/register");
     }
+
+
+
  return (
    <div className="login_div">
         <div className="login">
