@@ -58,6 +58,8 @@ func uploadImage(w http.ResponseWriter, r *http.Request) {
 		if typ == "png" || typ == "jpg" || typ == "jpeg" {
 
 			email := r.Form.Get("email")
+			note := r.Form.Get("note")
+			tag := r.Form.Get("tag")
 			var maxsno = 0
 			er := db.QueryRow("SELECT LAST_INSERT_ID() imagedetails").Scan(&maxsno)
 			if er != nil {
@@ -85,8 +87,8 @@ func uploadImage(w http.ResponseWriter, r *http.Request) {
 			}
 			///upload the file contents in the specifies location
 			url := "../uploads/" + path
-			statement, er3 := db.Prepare("INSERT into imagedetails SET imagepath = ? , email = ? ")
-			res, er4 := statement.Exec(url, email)
+			statement, er3 := db.Prepare("INSERT into imagedetails SET imagepath = ? , email = ? , note = ? , tag = ? ")
+			res, er4 := statement.Exec(url, email, note, tag)
 			_ = res
 			if er4 != nil || er3 != nil {
 				fmt.Println("5")

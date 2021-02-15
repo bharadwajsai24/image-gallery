@@ -9,6 +9,9 @@ import Login from "./components/authentication/login";
 import Register from "./components/authentication/registration";
 import Error from "./components/authentication/Error";
 import View from "./components/View/View";
+import Upload from "./components/View/Upload";
+import Gallery from "./components/View/Gallery";
+import Category from "./components/View/Category";
 function RouterConfiguration() {
 
     console.log(localStorage.getItem('email'));
@@ -30,6 +33,15 @@ function RouterConfiguration() {
         </Route>
         <Route exact path="/register" >
             <Register/>
+        </Route>
+        <Route exact path="/upload" >
+            <Upload/>
+        </Route>
+        <Route exact path="/gallery" >
+            <Gallery/>
+        </Route>
+        <Route exact path="/categories" >
+            <Category/>
         </Route>
         <Route exact path="*">
             <Error/>
